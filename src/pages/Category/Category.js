@@ -1,17 +1,21 @@
-import React from "react";
-import { useLoaderData } from "react-router-dom";
-import { Card } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Form, useLoaderData } from "react-router-dom";
+import { Card, Modal } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { FaMapMarkerAlt, FaStar } from 'react-icons/fa';
+import Modal_category from "../Modal_category/Modal_category";
+import Modal_button from "../Modal_button/Modal_button/Modal_button";
+
+
 
 const Category = () => {
   const categorie = useLoaderData();
-
+   
   return (
     
       <div>
        <div key={categorie.id} className="card mb-3" >
-  <Card.Header className='header-info d-flex justify-content-between p-3 mb-2'>
+      <Card.Header className='header-info d-flex justify-content-between p-3 mb-2'>
     <div className='movieTitle'> 
       <h1>{categorie.name}</h1>
      
@@ -37,24 +41,29 @@ const Category = () => {
   </Card.Header>
 <div className="row g-0">
   <div className="row-sm-12 col-md-4">
-
     <img src={categorie.image?.medium} className="img-fluid rounded-start w-100" alt="Movice-Poster"/>
-
   </div>
   <div className="col-md-8">
     <div className="card-body">
       <h5 className="card-title">About The Movie</h5>
       <>
-      <div className='fs-4 pt-5' dangerouslySetInnerHTML={{ __html: `${categorie.summary}` }} />
-     
+      <div className='fs-4 pt-5' dangerouslySetInnerHTML={{ __html: `${categorie.summary}` }} /> 
       </>
       <div>
-        <div>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+        <div>    
         </div>
-       
       </div>
+      {/* Modal section start */}
+    {/*  <Modal_category  
+     categories={categorie}
+     ></Modal_category> */}
+     <Modal_button
+     categories={categorie}
+     
+     >
 
+     </Modal_button>
+      
     </div>
   </div>
 </div>

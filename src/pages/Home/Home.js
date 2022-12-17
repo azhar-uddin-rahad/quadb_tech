@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { FaMapMarkerAlt, FaStar } from 'react-icons/fa';
+import Modal_button from '../Modal_button/Modal_button/Modal_button';
 
 const Home = () => {
   const [categories,setCategories] = useState([]);
@@ -58,6 +59,10 @@ const Home = () => {
       </div>
 
     </div>
+      {/* Modal section start */}
+      <Modal_button
+        categories={categorie.show}
+      ></Modal_button>
   </div>
 </div>
 <Card.Footer>
@@ -75,7 +80,7 @@ const Home = () => {
     
       {categorie.show.network?.officialSite &&
       
-      <h5>Official site: {categorie.show.network?.officialSite}</h5>}
+      <h5>  Official site: {categorie.show.network?.officialSite}</h5>}
     </div>
   </div>
 
