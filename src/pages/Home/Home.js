@@ -1,41 +1,94 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
+import { FaMapMarkerAlt, FaStar } from 'react-icons/fa';
 
 const Home = () => {
+  const [categories,setCategories] = useState([]);
+    useEffect(() => {
+        fetch('https://api.tvmaze.com/search/shows?q=all')
+        .then (res => res.json())
+        .then (data => setCategories(data));
+        
+    },[])
     return (
         <div >
-  <div class="card mb-3" >
-    <div className='header-info d-flex '>
-      <div className='movieTitle'> 
-        <h1>Hellow world</h1>
-      </div>
-      <div className='movieTitle'> 
-        <h1>Hellow world</h1>
-      </div>
-      
-    </div>
-  <div class="row g-0">
-    <div class="col-md-4">
+{
+  categories.map(categorie =>   <div key={categorie.show.id} className="card mb-3" >
+  <Card.Header className='header-info d-flex justify-content-between p-3 mb-2'>
+    <div className='movieTitle'> 
+      <h1>{categorie.show.name}</h1>
      
-      <img src="https://static.tvmaze.com/uploads/images/medium_portrait/425/1064746.jpg" class="img-fluid rounded-start" alt="..."/>
+       {categorie.show.premiered !== "null" &&   
+       <>
+       <p>Premiered:{categorie.show.premiered}</p>
+       </>
+        }
+      <p>Schedule: {categorie.show.schedule?.time} - 
+      {categorie.show.schedule?.days}
+      </p>
     </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    <div className='movieTitle'>  
+    {categorie.show.rating.average ?
+      
+      <i className='d-flex justify-content-center align-item-center gap-2'> <FaStar className='text-info fs-3'></FaStar><h6 className='fs-4'>{categorie.show.rating.average}</h6></i>
+    :
+    <i className='d-flex justify-content-center align-item-center gap-2'> <FaStar className='text-info fs-3'></FaStar><h6 className='fs-4'>0.0</h6></i>
+    
+    }
+    </div>
+    
+  </Card.Header>
+<div className="row g-0">
+  <div className="row-sm-12 col-md-4">
+
+    <img src={categorie.show.image?.medium} className="img-fluid rounded-start w-100" alt="Movice-Poster"/>
+
+  </div>
+  <div className="col-md-8">
+    <div className="card-body">
+      <h5 className="card-title">About The Movie</h5>
+      <>
+      <div className='fs-4 pt-5' dangerouslySetInnerHTML={{ __html: `${categorie.show.summary}` }} />
+     
+      </>
+      <div>
+       
       </div>
+
+    </div>
+  </div>
+</div>
+<Card.Footer>
+  <div className='d-flex justify-content-between'>
+    <div>
+     <h5>Network: {categorie.show.network?.name}</h5>
+     <h5>Schedule:{categorie.show.schedule?.days} at {categorie.show.schedule?.time} 
+       </h5>
+     <h5>Status: {categorie.show.status}</h5>
+     
+    </div>
+    <div>
+    <h5>Show Type: {categorie.show.type}</h5> 
+    <h5>Genres: {categorie.show.genres[0]} | {categorie.show.genres[1]}</h5>
+    
+      {categorie.show.network?.officialSite &&
+      
+      <h5>Official site: {categorie.show.network?.officialSite}</h5>}
     </div>
   </div>
 
-</div>
+
+</Card.Footer>
+
+</div>)
+}
 
 
 
 
-        </div>
+ </div>
     );
 };
 

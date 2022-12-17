@@ -16,19 +16,21 @@ const LeftSidebar = () => {
         <div>
             <h3>All Category: {categories.length}</h3>
             {
-                categories.map(categori => <div
-                key={categori.show.id}><Link class="text-decoration-none" to={`/category/${categori.show.id}`}> 
-<div class="card mb-3 h-25">
-  <div class="row g-0">
-    <div class="col-md-4">
-      <img src={categori.show.image?.medium} class="img-fluid rounded-start" alt="..."/>
+                categories.map(categori => <div 
+                key={categori.show.id}><Link className="text-decoration-none"  to={`/shows/${categori.show.id}`}> 
+<div className="card mb-4">
+  <div className="row g-0">
+    <div className="col-md-2">
+      <img src={categori.show.image?.medium} className="img-fluid rounded-start w-100 h-100"  alt="..."/>
     </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title text-dark">Card title</h5>
-        <p class="card-text text-dark">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <p class="card-text text-dark"><small class="text-muted">Last updated 3 mins ago</small></p>
+    <div className="col-md-1"> 
+    </div>
+    <div className="col-md-6 text-center align-item-center">
+      <div className="card-body">
+        <h5 className="card-title text-dark">{categori.show.name}</h5>  
       </div>
+    </div>
+    <div className="col-md-2"> 
     </div>
   </div>
 </div>
