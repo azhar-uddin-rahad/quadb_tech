@@ -1,22 +1,39 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Loading from '../Share/Loading/Loading';
 
 const LeftSidebar = () => {
+    /*
     const [categories,setCategories] = useState([]);
-    useEffect(() => {
+    if(!categories){
+      <Loading></Loading>
+    }
+     useEffect(() => {
         fetch('https://api.tvmaze.com/search/shows?q=all')
         .then (res => res.json())
         .then (data => setCategories(data));
         
-    },[])
-    console.log()
-
+    },[]) */
+    const { data: categories, isLoading } = useQuery({
+      queryKey: ["categories"],
+      queryFn: async () => {
+        const res = await fetch("https://api.tvmaze.com/search/shows?q=all");
+        const data = await res.json();
+       
+        return data;
+      },
+    });
+    
+    if(!isLoading){
+      <Loading></Loading>
+    }
 
     return (
         <div>
-            <h3>All Category: {categories.length}</h3>
+            {/* <h3>All Category: {categories.length}</h3> */}
             {
-                categories.map(categori => <div 
+                categories?.map(categori => <div 
                 key={categori.show.id}><Link className="text-decoration-none"  to={`/shows/${categori.show.id}`}> 
 <div className="card mb-4">
   <div className="row g-0">

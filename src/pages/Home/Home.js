@@ -1,19 +1,42 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { FaMapMarkerAlt, FaStar } from "react-icons/fa";
+import LeftSidebar from "../LeftSidebar/LeftSidebar";
 import Modal_button from "../Modal_button/Modal_button/Modal_button";
+import Loading from "../Share/Loading/Loading";
+
+
 
 const Home = () => {
-  const [categories, setCategories] = useState([]);
+ /*  const [categories, setCategories] = useState([]);
+  
   useEffect(() => {
     fetch("https://api.tvmaze.com/search/shows?q=all")
       .then((res) => res.json())
       .then((data) => setCategories(data));
-  }, []);
+  }, []); */
+ 
+
+  const { data: categories, isLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await fetch("https://api.tvmaze.com/search/shows?q=all");
+      const data = await res.json();
+     
+      return data;
+    },
+  });
+  if(isLoading)
+  {
+    return <Loading></Loading>
+  }
+
+  
   return (
     <div>
       {categories.map((categorie) => (
-        <div key={categorie.show.id} className="card mb-3">
+        <div key={categorie.show.id}  className="card mb-3">
           <Card.Header className="header-info d-flex justify-content-between p-3 mb-2">
             <div className="movieTitle">
               <h1>{categorie.show.name}</h1>
@@ -96,6 +119,7 @@ const Home = () => {
           </Card.Footer>
         </div>
       ))}
+
     </div>
   );
 };

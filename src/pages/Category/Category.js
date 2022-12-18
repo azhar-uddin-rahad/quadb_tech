@@ -3,9 +3,14 @@ import { useLoaderData } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import { FaStar } from "react-icons/fa";
 import Modal_button from "../Modal_button/Modal_button/Modal_button";
+import Loading from "../Share/Loading/Loading";
 
 const Category = () => {
   const categorie = useLoaderData();
+  if(!categorie){
+    return <Loading></Loading>
+  }
+   
   return (
     <div>
       <div key={categorie.id} className="card mb-3">
